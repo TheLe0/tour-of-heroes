@@ -5,6 +5,14 @@
 This is the Google's Angular tutorial. The repository follow the implementations on the tutorial documentation. There is one branch on this repo to each chapter 
 of the tutorial, if you want to see the differences and something specific.
 
+## Dependencies
+
+If you want to do the tutorial following this repo, you are only going to need these softwares installed on your machine:
+
+* [Node 16+](https://nodejs.org/en/)
+* [Angular CLI 13.2.6](https://www.npmjs.com/package/@angular/cli)
+* [Json server](https://www.npmjs.com/package/json-server)
+
 ## Overview
 
 The final application looks something like this:
@@ -20,3 +28,7 @@ The final application looks something like this:
 * [Chapter 4 - Add services](https://angular.io/tutorial/toh-pt4)
 * [Chapter 5 - Add navigation with routing](https://angular.io/tutorial/toh-pt5)
 * [Chapter 6 - Get data from a server](https://angular.io/tutorial/toh-pt6)
+
+>Note: On the chapter 6, the tutoril uses the ```angular-in-memory-web-api``` package, 
+>but, this package is deprecated, not maintained anymore, only compatible till Angular 10. So in 
+>this project we used another solution, ```json-server```, that is a good and efficient solution.

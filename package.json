@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --open",
+    "start:api": "json-server --watch ./data/heroes.json",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"

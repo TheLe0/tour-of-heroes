@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
@@ -9,24 +10,13 @@ import { MessageService } from './message.service';
 })
 export class HeroService {
 
-  constructor(private messageService: MessageService) { }
+  private readonly baseUrl: string = "http://localhost:3000/";
+  private readonly endpoint: string = 'heroes/';
 
-  private mockHeroes(): Hero[] {
-    return [
-      { id: 12, name: 'Dr. Nice' },
-      { id: 13, name: 'Bombasto' },
-      { id: 14, name: 'Celeritas' },
-      { id: 15, name: 'Magneta' },
-      { id: 16, name: 'RubberMan' },
-      { id: 17, name: 'Dynama' },
-      { id: 18, name: 'Dr. IQ' },
-      { id: 19, name: 'Magma' },
-      { id: 20, name: 'Tornado' }
-    ];
-  }
+  constructor(private messageService: MessageService, private http: HttpClient) { }
 
   getHeroes(): Observable<Hero[]> {
-    const heroes: Observable<Hero[]> = of(this.mockHeroes());
+    const heroes = this.http.get<Hero[]>(this.baseUrl + this.endpoint);
 
     this.messageService.add('HeroService: fetched heroes');
 
@@ -34,8 +24,38 @@ export class HeroService {
   }
 
   getHero(id: number): Observable<Hero> {
-    const hero = this.mockHeroes().find(h => h.id === id)!;
+    const hero = this.http.get<Hero>(this.baseUrl + this.endpoint + "/" + id);
     this.messageService.add(`HeroService: fetched hero id=${id}`);
-    return of(hero);
+    return hero;
+  }
+
+  updateHero(hero: Hero): Observable<Hero> {
+    const updatedHero = this.http.put<Hero>(this.baseUrl + this.endpoint + "/" + hero.id, hero);
+    this.messageService.add(`HeroService: updated hero id=${hero.id}`);
+    return updatedHero;
+  }
+
+  addHero(hero: Hero): Observable<Hero> {
+    const newHero = this.http.post<Hero>(this.baseUrl + this.endpoint, hero);
+    this.messageService.add(`HeroService: created hero id=${hero.id}`);
+    return newHero;
+  }
+
+  deleteHero(id: number): Observable<Hero> {
+    const deletedHero = this.http.delete<Hero>(this.baseUrl + this.endpoint + "/" + id);
+    this.messageService.add(`HeroService: deleted hero id=${id}`);
+    return deletedHero;
+  }
+
+  searchHeroes(term: string): Observable<Hero[]> {
+
+    if (!term.trim()) {
+      this.messageService.add(`HeroService: no hero found for term "${term}"`);
+      return of([]);
+    }
+
+    const hero = this.http.get<Hero[]>(this.baseUrl + this.endpoint + "?name=" + term);
+    this.messageService.add(`HeroService: fetched heros with term =${term}`);
+    return hero;
   }
 }

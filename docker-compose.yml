@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  tour-of-heroes-client:
+    container_name: tour-of-heroes-client
+    build:
+      context: ./
+      dockerfile: Client.Dockerfile
+    depends_on:
+      - tour-of-heroes-api
+    ports:
+      - 4200:80
+    networks:
+      - tour-of-heroes
+  tour-of-heroes-api:
+    build:
+      context: ./
+      dockerfile: Server.Dockerfile
+    ports:
+      - 3000:3000
+    networks:
+      - tour-of-heroes
+
+networks:
+  tour-of-heroes:
+    name: toh_network

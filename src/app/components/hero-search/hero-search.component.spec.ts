@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HeroSearchComponent } from './hero-search.component';
@@ -8,9 +9,10 @@ describe('HeroSearchComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ HeroSearchComponent ]
+      imports: [HttpClientModule],
+      declarations: [HeroSearchComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
